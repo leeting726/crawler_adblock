@@ -1,0 +1,17 @@
+Data_Collection:
+  chrome: "C:/Users/Public/ad/chrome/chrome-win64/chrome.exe"
+  chrome_driver: "C:/Users/Public/ad/chrome/chromedriver-win64/chromedriver.exe"
+#  chrome: "./chrome/chrome-win64/chrome"
+#  chrome_driver: "./chrome/chromedriver-win64/chromedriver"
+  chrome_legacy: "### your file path"
+  chrome_legacy_driver: "### your file path"
+  firefox: "### your file path"
+  firefox_driver: "### your file path"
+
+  network_interface: "network_0"
+
+H123_fingerprint:
+  max_len: 50
+  LCSS_sim_threshold: 0.24
+  candidate_num: 10
+  distance_measurement_weight: 0.5
