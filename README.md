@@ -1,3 +1,4 @@
 - chinaz：站长之家域名排名
 - 爬虫程序：crawler_main.py; collect_single_pcap_log_sc.py; fetch_by_chorme.py
-- find_sni.py：查找pcap文件中的URL
+- find_ad_url: 读取pcap文件，使用ssllogfile解密，通过对比URL之间的差集，识别广告URL，将结果保存至/ad_stream文件夹中
+- Splitpcap: 根据/ad_stream中标记的流信息，将其中的pcap文件拆分为flow级别文件，分别存入/labeled_pcap中的ad和no_ad文件夹 
