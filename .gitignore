@@ -1,0 +1,15 @@
+/ad_payload_lengths.num
+/result_chrome_1/
+/result_chrome_2/
+/result_chrome_3/
+# 忽略所有txt文件
+*.txt
+
+# 忽略所有zip文件
+*.zip
+
+# 忽略所有yaml文件
+*.yaml
+
+# 忽略所有pcap文件
+*.pcap
