@@ -2,13 +2,18 @@ import os
 import subprocess
 import logging
 
-result_path = "./result_chrome_3"
+result_path = "./result_chrome_4"
 
 logging.basicConfig(
     filename= result_path + '/split_pcap.log',  # Log file name
     level=logging.INFO,  # Log level
     format='%(asctime)s - %(levelname)s - %(message)s'  # Log format
 )
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)  # Set level for console
+console_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))  # Same format as file
+logging.getLogger().addHandler(console_handler)
+
 
 
 def file_2_pcap(source_file, target_file):
@@ -53,13 +58,17 @@ def split_pcap_by_tcp_stream(result_path, pcap_file, pcap_name, steam_index):
     logging.info(f"已将 {pcap_name} 按 TCP 流拆分完成，流索引范围: 0-{stream_len}")
 
     # 将pcapng文件转化为pcap格式
+    file_list = []
     for p, d, f in os.walk(base_dir):
         for file in f:
-            print(file)
-            target_file = file.replace('.', '_new.')
-            file_2_pcap(p + "\\" + file, p + "\\" + target_file)
-            if '_new.pcap' not in file:
-                os.remove(p + "\\" + file)
+            if '_new.pcap' not in file:  # 排除已经处理过的文件
+                file_list.append((p, file))
+
+    for p, file in file_list:
+        print(file)
+        target_file = file.replace('.', '_new.')
+        file_2_pcap(os.path.join(p, file), os.path.join(p, target_file))
+        os.remove(os.path.join(p, file))
 
 
 if __name__ == '__main__':
@@ -86,7 +95,7 @@ if __name__ == '__main__':
                                                  label_file.replace('_ad_streams.txt', '_Ad.pcap'))  # 广告流对应的pcap文件
                         pcap_name = label_file.replace('_ad_streams.txt', '_Ad.pcap')
                         logging.info(f"Processing file: {pcap_file}")
-                        split_pcap_by_tcp_stream(result_path, pcap_file, pcap_name, ad_streams)
+                        split_pcap_by_tcp_stream(result_path, pcap_file, pcap_name.replace('.pcap',''), ad_streams)
         logging.info("Main process completed")
     except Exception as e:
         logging.error(f"Error in main process: {e}")
